@@ -8,8 +8,8 @@ To run the tests : $ python -m unittest -v test
 """
 
 import unittest
-from pwnedapi import HaveIBeenPwnedApi
-from exception import NotValidEmail, BreachNotFound, UnvalidParameters
+from pwnedapi.pwnedapi import HaveIBeenPwnedApi
+from pwnedapi.exception import NotValidEmail, BreachNotFound, UnvalidParameters
 
 class TestHaveIBeenPwnedApi(unittest.TestCase):
 
