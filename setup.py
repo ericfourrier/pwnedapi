@@ -13,7 +13,7 @@ setup(name='pwnedapi',
       author_email='ericfourrier0@gmail.com',
       license='MIT',
       url='https://github.com/ericfourrier/pwnedapi.git',
-      packages=find_packages(),
+      packages=['pwnedapi'],
       test_suite='test',
       install_requires=[
           'requests']
