@@ -10,7 +10,7 @@ import requests
 from requests.utils import quote
 import re
 
-from exception import NotValidEmail, BreachNotFound, UnvalidParameters
+from .exception import NotValidEmail, BreachNotFound, UnvalidParameters
 
 
 
