@@ -13,7 +13,6 @@ import re
 from .exception import NotValidEmail, BreachNotFound, UnvalidParameters
 
 
-
 class HaveIBeenPwnedApi(object):
     base_api_url = "https://haveibeenpwned.com/api/v2"
     url_breaches = "{}/breaches".format(base_api_url)
@@ -34,7 +33,7 @@ class HaveIBeenPwnedApi(object):
         list_all_breaches_name = self.get_all_breaches_name()
         if name not in list_all_breaches_name:
             raise BreachNotFound("The breach was not found in the list of all breaches : {}".format(
-                                list_all_breaches_name))
+                                 list_all_breaches_name))
         res = requests.get("{}{}".format(self.url_breach, name))
         return res.json()
 
@@ -43,8 +42,9 @@ class HaveIBeenPwnedApi(object):
         res = requests.get(self.url_dataclasses)
         return res.json()
 
-    def get_all_breaches(self, **params):
-        payload = params
+    def get_all_breaches(self, domain=None):
+        """ Get all breaches, domain to look for certain domain (adobe.com) """
+        payload = {'domain': domain} if domain is not None else {}
         res = requests.get(self.url_breaches, params=payload)
         return res.json()
 
@@ -65,7 +65,7 @@ class HaveIBeenPwnedApi(object):
         url_email = "{}{}".format(self.url_account, email)
         payload = params
         try:
-            res = requests.get(url_email,params=payload)
+            res = requests.get(url_email, params=payload)
             if res.status_code == 404:
                 if verbose:
                     print("The account could not be found and has therefore not been pwned")
@@ -75,6 +75,7 @@ class HaveIBeenPwnedApi(object):
         except Exception as e:
             print(e)
             return []
+
     def check_pastebin(self, email, verbose=True):
         """ Check if an email is in a pastebin """
         if not self.regex_email.match(email):
@@ -82,7 +83,7 @@ class HaveIBeenPwnedApi(object):
         email = quote(email)
         url_paste = "{}{}".format(self.url_paste, email)
         try:
-            res =  requests.get(url_paste)
+            res = requests.get(url_paste)
             if res.status_code == 404:
                 if verbose:
                     print("The account could not be found on any paste lists")
